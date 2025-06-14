@@ -7,8 +7,8 @@ const ctx = canvas.getContext("2d");
 
 // ==== ゲーム設定 ====
 const message = "ぼくのなまえはやすこうちといいます。よろしくおねがいします";
-const blockRowCount = 4; // 行数
-const blockColumnCount = 7; // 列数
+const blockColumnCount = 7; // 列数（固定）
+const blockRowCount = Math.ceil(message.length / blockColumnCount); // 行数をメッセージに合わせる
 const blockWidth = canvas.width / blockColumnCount - 8;
 const blockHeight = canvas.height / 13;
 const blockPadding = 6;
@@ -20,7 +20,7 @@ let blocks = [];
 let index = 0;
 for(let r=0; r<blockRowCount; r++) {
   blocks[r] = [];
-  for(let c=0; c<blockColumnCount; c++) {
+  for(let c=0; c<blockColumnCount && index < message.length; c++) {
     blocks[r][c] = { x: 0, y: 0, status: 1, charIndex: index++ };
   }
 }
@@ -109,7 +109,7 @@ function resetGame() {
   paddleX = (canvas.width - paddleWidth) / 2;
   let idx = 0;
   for(let r=0; r<blockRowCount; r++) {
-    for(let c=0; c<blockColumnCount; c++) {
+    for(let c=0; c<blocks[r].length; c++) {
       blocks[r][c].status = 1;
       blocks[r][c].charIndex = idx++;
     }
@@ -123,7 +123,7 @@ function resetGame() {
 // ====== 衝突判定 ======
 function collisionDetection() {
   for(let r=0; r<blockRowCount; r++) {
-    for(let c=0; c<blockColumnCount; c++) {
+    for(let c=0; c<blocks[r].length; c++) {
       let b = blocks[r][c];
       if(b.status === 1) {
         if(
@@ -150,7 +150,7 @@ function collisionDetection() {
 }
 function isAllCleared() {
   for(let r=0; r<blockRowCount; r++) {
-    for(let c=0; c<blockColumnCount; c++) {
+    for(let c=0; c<blocks[r].length; c++) {
       if(blocks[r][c].status === 1) return false;
     }
   }
@@ -158,7 +158,7 @@ function isAllCleared() {
 }
 function drawBlocks() {
   for(let r=0; r<blockRowCount; r++) {
-    for(let c=0; c<blockColumnCount; c++) {
+    for(let c=0; c<blocks[r].length; c++) {
       if(blocks[r][c].status === 1 && blocks[r][c].charIndex < message.length) {
         let blockX = (c * (blockWidth + blockPadding)) + blockOffsetLeft;
         let blockY = (r * (blockHeight + blockPadding)) + blockOffsetTop;
