@@ -1,5 +1,5 @@
 // ==== 画面サイズに合わせて設定 ====
-const vw = Math.min(window.innerWidth, 1000); // 最大幅640px
+const vw = Math.min(window.innerWidth, 640); // 最大幅640px
 const canvas = document.getElementById("game");
 canvas.width = vw;
 canvas.height = Math.floor(vw * 0.8); // 高さも広め
@@ -9,8 +9,8 @@ const ctx = canvas.getContext("2d");
 const message = "ぼくのなまえはやすこうちといいます。よろしくおねがいします";
 const blockRowCount = 4; // 行数
 const blockColumnCount = 7; // 列数
-const blockWidth = canvas.width / blockColumnCount - 8; // ブロックの幅
-const blockHeight = canvas.height / 13; // ブロックの高さ
+const blockWidth = canvas.width / blockColumnCount - 8;
+const blockHeight = canvas.height / 13;
 const blockPadding = 6;
 const blockOffsetTop = 24;
 const blockOffsetLeft = 10;
@@ -37,34 +37,28 @@ let paddleX = (canvas.width - paddleWidth) / 2;
 const ballRadius = 10;
 let x = canvas.width / 2;
 let y = canvas.height - 40;
-let dx = canvas.width / 90;
-let dy = -canvas.height / 90;
+let dx = canvas.width / 45; // 高速
+let dy = -canvas.height / 45;
 
 // ===== 操作状態 =====
 let rightPressed = false;
 let leftPressed = false;
 
-// ===== タッチ操作用 =====
-const touchLeft = document.getElementById("touch-left");
-const touchRight = document.getElementById("touch-right");
+// ===== スマホ用: バーを指でスライドして動かす =====
+canvas.addEventListener("touchstart", onTouchMove, false);
+canvas.addEventListener("touchmove", onTouchMove, false);
+canvas.addEventListener("touchend", function(e){ e.preventDefault(); }, false);
 
-// ==== タッチイベント
-touchLeft.addEventListener("touchstart", e => {
+function onTouchMove(e) {
   e.preventDefault();
-  leftPressed = true;
-});
-touchLeft.addEventListener("touchend", e => {
-  e.preventDefault();
-  leftPressed = false;
-});
-touchRight.addEventListener("touchstart", e => {
-  e.preventDefault();
-  rightPressed = true;
-});
-touchRight.addEventListener("touchend", e => {
-  e.preventDefault();
-  rightPressed = false;
-});
+  if (e.touches.length > 0) {
+    const rect = canvas.getBoundingClientRect();
+    const touchX = e.touches[0].clientX - rect.left;
+    paddleX = touchX - paddleWidth / 2;
+    if (paddleX < 0) paddleX = 0;
+    if (paddleX > canvas.width - paddleWidth) paddleX = canvas.width - paddleWidth;
+  }
+}
 
 // ===== PCキーボード操作も残す =====
 document.addEventListener("keydown", keyDownHandler, false);
@@ -80,14 +74,11 @@ function keyUpHandler(e) {
 
 // ====== ゲームリセット処理 ======
 function resetGame() {
-  // ボールの位置と速度リセット
   x = canvas.width / 2;
   y = canvas.height - 40;
-  dx = canvas.width / 90;
-  dy = -canvas.height / 90;
-  // パドルも中央に
+  dx = canvas.width / 45;
+  dy = -canvas.height / 45;
   paddleX = (canvas.width - paddleWidth) / 2;
-  // ブロックと文字表示のリセット
   let idx = 0;
   for(let r=0; r<blockRowCount; r++) {
     for(let c=0; c<blockColumnCount; c++) {
@@ -181,14 +172,12 @@ function draw() {
 
   if(!gameOver) {
     collisionDetection();
-    // 壁・パドルとの判定
     if(x + dx > canvas.width - ballRadius || x + dx < ballRadius) dx = -dx;
     if(y + dy < ballRadius) dy = -dy;
     else if(y + dy > canvas.height - ballRadius - paddleHeight - 5) {
       if(x > paddleX && x < paddleX + paddleWidth) {
         dy = -dy;
       } else if (y + dy > canvas.height - ballRadius) {
-        // ====== ゲームオーバー処理 ======
         gameOver = true;
         document.getElementById("restart-btn").style.display = "block";
         return; // drawループを止める（完全停止）
@@ -196,7 +185,7 @@ function draw() {
     }
     x += dx;
     y += dy;
-    // パドルの移動
+    // パドルの移動（PCキーボード操作）
     if(rightPressed && paddleX < canvas.width - paddleWidth) paddleX += 10;
     else if(leftPressed && paddleX > 0) paddleX -= 10;
 
