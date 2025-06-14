@@ -8,20 +8,24 @@
 </head>
 <body>
   <h1>ブロック崩し × 一文字ずつ表示</h1>
-  <div id="game-container">
-    <div id="message-area"></div>
-    <canvas id="game"></canvas>
-    <!-- タッチ操作エリア（スマホ用。見えないが必須） -->
-    <div id="touch-left"></div>
-    <div id="touch-right"></div>
-  </div>
-  <!-- キャンバス外（下）にリスタートボタン -->
-  <button id="restart-btn" style="display:none;">リスタート</button>
-  <script src="main.js"></script>
-  <div id="arrow-buttons">
+ <div id="game-container">
+  <div id="message-area"></div>
+  <canvas id="game"></canvas>
+</div>
+<!-- 操作説明 -->
+<div id="howto">
+  <strong>【操作方法】</strong><br>
+  スマホ：下の矢印ボタンを長押し<br>
+  パソコン：← → キーでバーを操作
+</div>
+<!-- リスタートボタン -->
+<button id="restart-btn" style="display:none;">リスタート</button>
+<!-- スマホ操作用大きな矢印ボタン -->
+<div id="arrow-buttons">
   <button id="left-arrow" aria-label="左へ"><span>&larr;</span></button>
   <button id="right-arrow" aria-label="右へ"><span>&rarr;</span></button>
 </div>
+
 
 </body>
 </html>
