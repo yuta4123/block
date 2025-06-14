@@ -44,23 +44,51 @@ let dy = -canvas.height / 45;
 let rightPressed = false;
 let leftPressed = false;
 
-// ===== スマホ用: バーを指でスライドして動かす =====
-canvas.addEventListener("touchstart", onTouchMove, false);
-canvas.addEventListener("touchmove", onTouchMove, false);
-canvas.addEventListener("touchend", function(e){ e.preventDefault(); }, false);
+// ===== スマホ用：大きな矢印ボタンで操作 =====
+const leftArrow = document.getElementById("left-arrow");
+const rightArrow = document.getElementById("right-arrow");
 
-function onTouchMove(e) {
+leftArrow.addEventListener("touchstart", e => {
   e.preventDefault();
-  if (e.touches.length > 0) {
-    const rect = canvas.getBoundingClientRect();
-    const touchX = e.touches[0].clientX - rect.left;
-    paddleX = touchX - paddleWidth / 2;
-    if (paddleX < 0) paddleX = 0;
-    if (paddleX > canvas.width - paddleWidth) paddleX = canvas.width - paddleWidth;
-  }
-}
+  leftPressed = true;
+});
+leftArrow.addEventListener("mousedown", e => {
+  e.preventDefault();
+  leftPressed = true;
+});
+leftArrow.addEventListener("touchend", e => {
+  e.preventDefault();
+  leftPressed = false;
+});
+leftArrow.addEventListener("mouseup", e => {
+  e.preventDefault();
+  leftPressed = false;
+});
+leftArrow.addEventListener("mouseleave", e => {
+  leftPressed = false;
+});
 
-// ===== PCキーボード操作も残す =====
+rightArrow.addEventListener("touchstart", e => {
+  e.preventDefault();
+  rightPressed = true;
+});
+rightArrow.addEventListener("mousedown", e => {
+  e.preventDefault();
+  rightPressed = true;
+});
+rightArrow.addEventListener("touchend", e => {
+  e.preventDefault();
+  rightPressed = false;
+});
+rightArrow.addEventListener("mouseup", e => {
+  e.preventDefault();
+  rightPressed = false;
+});
+rightArrow.addEventListener("mouseleave", e => {
+  rightPressed = false;
+});
+
+// ===== PCキーボード操作 =====
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 function keyDownHandler(e) {
@@ -185,7 +213,7 @@ function draw() {
     }
     x += dx;
     y += dy;
-    // パドルの移動（PCキーボード操作）
+    // パドルの移動（ボタン/キー操作）
     if(rightPressed && paddleX < canvas.width - paddleWidth) paddleX += 10;
     else if(leftPressed && paddleX > 0) paddleX -= 10;
 
@@ -202,49 +230,3 @@ document.getElementById("restart-btn").addEventListener("click", function() {
 // ===== メッセージ初期表示 & ゲーム開始 =====
 document.getElementById("message-area").textContent = revealed.join("");
 draw();
-
-// ======= 追加ここから =======
-const leftArrow = document.getElementById("left-arrow");
-const rightArrow = document.getElementById("right-arrow");
-
-leftArrow.addEventListener("touchstart", e => {
-  e.preventDefault();
-  leftPressed = true;
-});
-leftArrow.addEventListener("mousedown", e => {
-  e.preventDefault();
-  leftPressed = true;
-});
-leftArrow.addEventListener("touchend", e => {
-  e.preventDefault();
-  leftPressed = false;
-});
-leftArrow.addEventListener("mouseup", e => {
-  e.preventDefault();
-  leftPressed = false;
-});
-leftArrow.addEventListener("mouseleave", e => {
-  leftPressed = false;
-});
-
-rightArrow.addEventListener("touchstart", e => {
-  e.preventDefault();
-  rightPressed = true;
-});
-rightArrow.addEventListener("mousedown", e => {
-  e.preventDefault();
-  rightPressed = true;
-});
-rightArrow.addEventListener("touchend", e => {
-  e.preventDefault();
-  rightPressed = false;
-});
-rightArrow.addEventListener("mouseup", e => {
-  e.preventDefault();
-  rightPressed = false;
-});
-rightArrow.addEventListener("mouseleave", e => {
-  rightPressed = false;
-});
-// ======= 追加ここまで =======
-
