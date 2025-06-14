@@ -92,3 +92,29 @@ body {
   background: #222;
   transform: scale(0.95);
 }
+
+
+#arrow-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 16px auto 0 auto;
+}
+#arrow-buttons button {
+  background: linear-gradient(90deg, #1fc8db 0%, #2cb5e8 100%);
+  border: none;
+  border-radius: 999px;
+  width: 70px;
+  height: 70px;
+  font-size: 2.5em;
+  color: #fff;
+  box-shadow: 0 4px 16px #39f4;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  transition: background 0.18s, transform 0.08s;
+}
+#arrow-buttons button:active {
+  background: #222;
+  transform: scale(0.95);
+}
