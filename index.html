@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ブロック崩し × 一文字ずつ表示</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>ブロック崩し × 一文字ずつ表示</h1>
+  <div id="game-container">
+    <div id="message-area"></div>
+    <canvas id="game"></canvas>
+    <!-- タッチ操作エリア（スマホ用。見えないが必須） -->
+    <div id="touch-left"></div>
+    <div id="touch-right"></div>
+  </div>
+  <!-- キャンバス外（下）にリスタートボタン -->
+  <button id="restart-btn" style="display:none;">リスタート</button>
+  <script src="main.js"></script>
+</body>
+</html>

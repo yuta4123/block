@@ -1,0 +1,70 @@
+body {
+    background: #222;
+    color: #fff;
+    text-align: center;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  h1 {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: 1.3em 0 0.5em 0;
+    letter-spacing: 0.08em;
+  }
+  #game-container {
+    margin: 0 auto;
+    width: 100vw;
+    max-width: 480px;
+    position: relative;
+  }
+  canvas {
+    background: #111;
+    display: block;
+    margin: 0 auto 20px auto;
+    border-radius: 14px;
+    box-shadow: 0 0 24px #0af8;
+    width: 100vw;
+    max-width: 480px;
+    height: 60vw;
+    max-height: 320px;
+    touch-action: none;
+  }
+  #message-area {
+    font-size: 1.25em;
+    letter-spacing: 0.18em;
+    margin: 16px 0;
+    color: #0af8;
+    min-height: 1.2em;
+  }
+  #touch-left, #touch-right {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    z-index: 3;
+    /* 透明だがタッチ用 */
+    background: transparent;
+  }
+  #touch-left { left: 0; }
+  #touch-right { right: 0; }
+  /* リスタートボタンの見た目 */
+  #restart-btn {
+    margin: 14px auto 0 auto;
+    display: block;
+    padding: 0.7em 2em;
+    font-size: 1.1em;
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(90deg, #1fc8db 0%, #2cb5e8 100%);
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 0 4px 16px #39f3;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  #restart-btn:hover {
+    background: linear-gradient(90deg, #1fc8db 0%, #0f2027 100%);
+    transform: scale(1.05);
+  }
+  
