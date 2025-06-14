@@ -202,3 +202,49 @@ document.getElementById("restart-btn").addEventListener("click", function() {
 // ===== メッセージ初期表示 & ゲーム開始 =====
 document.getElementById("message-area").textContent = revealed.join("");
 draw();
+
+// ======= 追加ここから =======
+const leftArrow = document.getElementById("left-arrow");
+const rightArrow = document.getElementById("right-arrow");
+
+leftArrow.addEventListener("touchstart", e => {
+  e.preventDefault();
+  leftPressed = true;
+});
+leftArrow.addEventListener("mousedown", e => {
+  e.preventDefault();
+  leftPressed = true;
+});
+leftArrow.addEventListener("touchend", e => {
+  e.preventDefault();
+  leftPressed = false;
+});
+leftArrow.addEventListener("mouseup", e => {
+  e.preventDefault();
+  leftPressed = false;
+});
+leftArrow.addEventListener("mouseleave", e => {
+  leftPressed = false;
+});
+
+rightArrow.addEventListener("touchstart", e => {
+  e.preventDefault();
+  rightPressed = true;
+});
+rightArrow.addEventListener("mousedown", e => {
+  e.preventDefault();
+  rightPressed = true;
+});
+rightArrow.addEventListener("touchend", e => {
+  e.preventDefault();
+  rightPressed = false;
+});
+rightArrow.addEventListener("mouseup", e => {
+  e.preventDefault();
+  rightPressed = false;
+});
+rightArrow.addEventListener("mouseleave", e => {
+  rightPressed = false;
+});
+// ======= 追加ここまで =======
+
